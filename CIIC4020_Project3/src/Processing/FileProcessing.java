@@ -71,6 +71,7 @@ public class FileProcessing {
 		BTNode<String,Integer> nodes;// = new BTNode<String,Integer>();
 
 		List<String> keysAsList = inputMap.getKeys();
+		
 		ArrayList<BTNode<String,Integer>> sortedNodes = new ArrayList<BTNode<String,Integer>>(inputMap.size());
 		
 		for(String keys : keysAsList) {
@@ -89,7 +90,10 @@ public class FileProcessing {
 	}
 	
 	//==========================================================================================
-	//Hello, I made quickSort!!!!! Excited.
+	/*Hello, I made quickSort!!!!! Excited. I decided to use an array list 					//||
+	 *because SortedArrayList would sort the nodes from the highest to the lowest 			//||
+	 *and I wanted the list to be from low to high.											//||		
+	 */																						//||
 	private void sortList(List<BTNode<String,Integer>> list) {								//||
 		qs(list,0,list.size()-1);															//||		
 	}																						//||
@@ -106,18 +110,20 @@ public class FileProcessing {
 	private int partition(List<BTNode<String, Integer>> list, int first, int last) {		//||
 		// TODO Auto-generated method stub													//||
 		BTNode<String,Integer> pivot = list.get(last);										//||
+		BTNode<String,Integer> swapI;														//||
 		int i = first - 1;																	//||
 		for(int j = first; j <= last - 1; j++) {											//||
 			if(list.get(j).getValue() < pivot.getValue()) {									//||
 				i++;																		//||
-				BTNode<String,Integer> swapI = list.get(i);									//||
+				swapI = list.get(i);														//||
 				list.set(i, list.get(j));													//||
 				list.set(j, swapI);															//||
 			}																				//||
 		}																					//||
-		BTNode<String,Integer> swapI = list.get(i+1);										//||
+		swapI = list.get(i+1);																//||
 		list.set(i+1, list.get(last));														//||
 		list.set(last, swapI);																//||
+																							//||
 		return i+1;																			//||
 	}																						//||
 	//==========================================================================================
