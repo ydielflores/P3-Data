@@ -111,9 +111,11 @@ public class SortedArrayList<E extends Comparable<? super E>> extends AbstractSo
 		if (index < 0 || index >= size())
 			throw new IndexOutOfBoundsException();
 		/* Shift elements up to avoid gaps in the array */
+		E result = elements[index];
 		for (int j = index; j < size() - 1; j++)
-			elements[j]  = elements[j + 1];
-		return (elements[--currentSize] = null);
+		     elements[j]  = elements[j + 1];
+		elements[--currentSize] = null;
+		return result;
 	}
 
 	@Override

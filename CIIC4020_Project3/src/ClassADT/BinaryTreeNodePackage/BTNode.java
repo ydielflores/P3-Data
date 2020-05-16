@@ -81,7 +81,9 @@ implements Comparable<BTNode<K, V>>, PrintableNode{
 	
 	@Override
 	public int compareTo(BTNode<K, V> o) {
-		
+		if(this.getKey().compareTo(o.getKey()) == 0) {
+			return this.getValue().compareTo(o.getValue());
+		}
 		return this.getKey().compareTo(o.getKey());
 	}
 	

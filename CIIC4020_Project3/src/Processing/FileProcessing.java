@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import ClassADT.*;
 import ClassADT.BinaryTreeNodePackage.BTNode;
+import ClassADT.BinaryTreeNodePackage.BinaryTreePrinter;
 import ClassADT.SortedList.SortedArrayList;
 import ClassADT.SortedList.SortedList;
 
@@ -25,17 +26,20 @@ public class FileProcessing {
 	}
 
 	public void start(File input) throws FileNotFoundException {
-
+		//TODO DELETE
 		System.out.println(loadData(input));
-		huffmanTree(computeFD(loadData(input)));
+		huffmanCode(huffmanTree(computeFD(loadData(input))));
 		
 	}
 
+	@SuppressWarnings("resource")
 	public String loadData(File input) throws FileNotFoundException {
 
 		Scanner sc = new Scanner(input);
 		String result = sc.nextLine();
-				
+		if(result.length() == 0) {
+			throw new IllegalArgumentException("File is empty.");
+		}
 		sc.close();
 
 		return result;
@@ -45,8 +49,7 @@ public class FileProcessing {
 	public Map<String,Integer> computeFD(String input){
 		
 		HashTableSCFactory<String, Integer> htscf = new  HashTableSCFactory<String, Integer>();
-
-		Map<String,Integer> result = htscf.getInstance(input.length()*2);
+		Map<String,Integer> result =  htscf.getInstance(input.length()*2);
 		
 		String toString;
 		
@@ -60,71 +63,99 @@ public class FileProcessing {
 				result.put(toString, 1);
 			}
 		}
+		//TODO DELETE
 		result.print(System.out);
 		
 		return result;
 
 	}
 	
-	public void huffmanTree(Map<String,Integer> inputMap){
+	public BTNode<Integer, String> huffmanTree(Map<String,Integer> inputMap){
 		
-		BTNode<String,Integer> nodes;// = new BTNode<String,Integer>();
-
-		List<String> keysAsList = inputMap.getKeys();
+		List<String> keysAsList =  inputMap.getKeys();
 		
-		ArrayList<BTNode<String,Integer>> sortedNodes = new ArrayList<BTNode<String,Integer>>(inputMap.size());
+		if(inputMap.size() == 1) {
+			
+			return new BTNode<Integer,String>(inputMap.get(keysAsList.get(0)),keysAsList.get(0));
+		}
+		
+		
+		
+		SortedArrayList<BTNode<Integer,String>> sortedNodes = new SortedArrayList<BTNode<Integer,String>>(inputMap.size());
 		
 		for(String keys : keysAsList) {
-			nodes = new BTNode<String,Integer>(keys,inputMap.get(keys));
-			sortedNodes.add(nodes);
+			sortedNodes.add(new BTNode<Integer,String>(inputMap.get(keys),keys));
 		}
 		
-		sortList(sortedNodes);
 		
-		for(int i = 0; i < sortedNodes.size(); i++) {
-			System.out.println(sortedNodes.get(i).getText()); 
+		int limiter = sortedNodes.size()-1;
+
+		
+		for(int i = 0; i < limiter; i++) {
+			
+			BTNode<Integer,String> nodeThatLinks = new BTNode<Integer,String>();
+			BTNode<Integer,String> nodeOne = sortedNodes.removeIndex(0);
+			BTNode<Integer,String> nodeTwo = sortedNodes.removeIndex(0);
+			if(nodeOne.compareTo(nodeTwo)<0) {
+				nodeThatLinks.setRightChild(nodeTwo);
+				nodeThatLinks.setLeftChild(nodeOne);
+			}else {
+				nodeThatLinks.setRightChild(nodeOne);
+				nodeThatLinks.setLeftChild(nodeTwo);
+			}
+			
+			nodeThatLinks.setKey(nodeThatLinks.getRightChild().getKey() + nodeThatLinks.getLeftChild().getKey());
+			nodeThatLinks.setValue(nodeThatLinks.getLeftChild().getValue().concat(nodeThatLinks.getRightChild().getValue()));
+			
+			sortedNodes.add(nodeThatLinks);
+			
 		}
 		
-		//return nodes;
+		BinaryTreePrinter.print(sortedNodes.get(0));
+		return sortedNodes.get(0);
 		
 	}
+		
+	public Map<String,String> huffmanCode(BTNode<Integer, String> root){
+		HashTableSCFactory<String, String> htscf = new  HashTableSCFactory<String, String>();
+		
+		Map<String,String> result =  htscf.getInstance(10);
+		String code = "";
+		
+		return result;
+		
+	}
+	private Map<String,String> huffmanCodeAux(BTNode<Integer,String> root, Map<String,String> result, String code){
+		
+		if(root.getLeft() != null) {
+			return huffmanCodeAux(root.getLeftChild(), result, "0" + code );
+		}else if(root.getRightChild() != null) {
+			return huffmanCodeAux(root.getRightChild(), result, "1" + code );
+		}
+	}
 	
-	//==========================================================================================
-	/*Hello, I made quickSort!!!!! Excited. I decided to use an array list 					//||
-	 *because SortedArrayList would sort the nodes from the highest to the lowest 			//||
-	 *and I wanted the list to be from low to high.											//||		
-	 */																						//||
-	private void sortList(List<BTNode<String,Integer>> list) {								//||
-		qs(list,0,list.size()-1);															//||		
-	}																						//||
-																							//||
-	private void qs(List<BTNode<String,Integer>> list, int first, int last) {				//||
-		if(first<last) {																	//||
-			int pi = partition(list,first,last);											//||
-																							//||
-			qs(list,first,pi-1);															//||
-			qs(list,pi+1,last);																//||	
-		}																					//||
-	}																						//||
-																							//||
-	private int partition(List<BTNode<String, Integer>> list, int first, int last) {		//||
-		// TODO Auto-generated method stub													//||
-		BTNode<String,Integer> pivot = list.get(last);										//||
-		BTNode<String,Integer> swapI;														//||
-		int i = first - 1;																	//||
-		for(int j = first; j <= last - 1; j++) {											//||
-			if(list.get(j).getValue() < pivot.getValue()) {									//||
-				i++;																		//||
-				swapI = list.get(i);														//||
-				list.set(i, list.get(j));													//||
-				list.set(j, swapI);															//||
-			}																				//||
-		}																					//||
-		swapI = list.get(i+1);																//||
-		list.set(i+1, list.get(last));														//||
-		list.set(last, swapI);																//||
-																							//||
-		return i+1;																			//||
-	}																						//||
-	//==========================================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

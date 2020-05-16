@@ -12,7 +12,7 @@ public class HuffManCoding {
 		
 		fp.start(fp.input);
 		System.out.println("");
-		fp.start(fp.input2);
+		//fp.start(fp.input2);
 	}
 
 }
