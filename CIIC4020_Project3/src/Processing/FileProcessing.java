@@ -151,7 +151,7 @@ public class FileProcessing {
 		for (int i = 0; i < input.length(); i++) {
 			toString = String.valueOf(input.charAt(i));
 			
-			encodedInput = encodedInput + codeMap.get(toString);
+			encodedInput += codeMap.get(toString);
 		}
 		
 		return encodedInput;
@@ -163,6 +163,7 @@ public class FileProcessing {
 		System.out.println();
 		System.out.println("______          _________       ____");
 		
+		
 		System.out.println("Original strin: ");
 		System.out.println(inputString);
 		System.out.println();
@@ -171,7 +172,8 @@ public class FileProcessing {
 		System.out.println();
 		System.out.println("The original string requieres "   + inputString.getBytes().length   + " bytes.");
 		System.out.println("The encoded string requieres "    + encodedString.getBytes().length + " bytes.");
-		System.out.println("Difference in space requires is " + encodedString.length()/inputString.length() + ".");
+		double differencePercent = encodedString.length()/inputString.length();
+		System.out.println("Difference in space requires is " + differencePercent + ".");
 		
 	} 
 
