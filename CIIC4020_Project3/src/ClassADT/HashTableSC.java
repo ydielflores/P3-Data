@@ -163,12 +163,6 @@ public class HashTableSC<K, V> implements Map<K, V> {
 	
 	private void reHash() {
 		
-		//Puse estos estos prints aqui para complementar los testers.
-		System.out.println();
-		System.out.println("reHash has been summoned.");
-		System.out.println();
-		//
-		
 		HashTableSC<K,V> reHash = new HashTableSC<K,V>(buckets.length*2,hashFunction);
 		for (int i = 0; i < buckets.length; i++) {
 			for(BucketNode<K, V> bucketNode: buckets[i]) {

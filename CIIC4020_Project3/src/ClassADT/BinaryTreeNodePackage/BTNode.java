@@ -10,8 +10,7 @@ import ClassADT.BinaryTreeNodePackage.BinaryTreePrinter.PrintableNode;
  * @param <K> Generic type for the key of the values to be stored in the nodes
  * @param <V> Generic type for the values to be stored in the nodes
  */
-public class BTNode<K extends Comparable<? super K>, V extends Comparable<? super V>>
-implements Comparable<BTNode<K, V>>, PrintableNode{
+public class BTNode<K extends Comparable<? super K>, V extends Comparable<? super V>> implements Comparable<BTNode<K, V>>, PrintableNode{
 	private K key;
 	private V value;
 	private BTNode<K, V> leftChild, rightChild, parent;

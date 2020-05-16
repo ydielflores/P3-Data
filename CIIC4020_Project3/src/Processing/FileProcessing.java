@@ -2,6 +2,7 @@ package Processing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 import ClassADT.*;
@@ -24,8 +25,26 @@ public class FileProcessing {
 	}
 
 	public void start(File input) throws FileNotFoundException {
-		//TODO DELETE
+
 		String inputAsString = loadData(input);
+		
+		Map<String,Integer> mapWithFrequencies = computeFD(inputAsString);
+		Map<String,String> mapWithTheHuffmanCoding = huffmanCode(huffmanTree(mapWithFrequencies));
+		
+		String encodedString = encode(mapWithTheHuffmanCoding,inputAsString);
+		
+		processResults(mapWithTheHuffmanCoding,inputAsString,mapWithFrequencies,encodedString);
+		
+	}
+	
+	/*
+	 * This is an auxiliary method for start(File) and receives a String instead.
+	 * This method was made to be able to use/test with the method created on main
+	 * called generateStringForTesting().
+	 */
+	public void start(String input) throws FileNotFoundException {
+
+		String inputAsString = input;
 		
 		Map<String,Integer> mapWithFrequencies = computeFD(inputAsString);
 		Map<String,String> mapWithTheHuffmanCoding = huffmanCode(huffmanTree(mapWithFrequencies));
@@ -42,7 +61,7 @@ public class FileProcessing {
 		Scanner sc = new Scanner(input);
 		String result = sc.nextLine();
 		if(result.length() == 0) {
-			throw new IllegalArgumentException("File is empty.");
+			throw new IllegalArgumentException("Please input a file with at least one line of text.");
 		}
 		sc.close();
 
@@ -67,8 +86,6 @@ public class FileProcessing {
 				result.put(toString, 1);
 			}
 		}
-		//TODO DELETE
-		result.print(System.out);
 
 		return result;
 
@@ -115,15 +132,15 @@ public class FileProcessing {
 
 		}
 
-		BinaryTreePrinter.print(sortedNodes.get(0));
 		return sortedNodes.get(0);
 
 	}
 
 	public Map<String,String> huffmanCode(BTNode<Integer, String> root){
+		
 		HashTableSCFactory<String, String> htscf = new  HashTableSCFactory<String, String>();
 
-		Map<String,String> result =  htscf.getInstance(10);
+		Map<String,String> result =  htscf.getInstance(11);
 		
 		huffmanCodeAux(root,"",result);
 
@@ -159,21 +176,36 @@ public class FileProcessing {
 	}
 
 	public void processResults(Map<String,String> codeMap, String inputString, Map<String, Integer> mapWithFrequencies, String encodedString) {
-		System.out.print("Symbol" + "\t\t" + "Frequency" + "\t" + "Code");
-		System.out.println();
-		System.out.println("______          _________       ____");
+		System.out.print("Symbol" + "\t\t" + "Frequency" + "\t" + "Code" + "\n");
+		System.out.println("______          _________       ____" );
+		
+	
+		for(String keys : codeMap.getKeys()) {
+			System.out.println(keys + "\t\t" + mapWithFrequencies.get(keys) + "\t\t" + codeMap.get(keys)); 
+		}
 		
 		
-		System.out.println("Original strin: ");
+		
+		
+		
+		System.out.println("Original string: ");
 		System.out.println(inputString);
 		System.out.println();
 		System.out.println("Encoded String: ");
 		System.out.println(encodedString);
 		System.out.println();
 		System.out.println("The original string requieres "   + inputString.getBytes().length   + " bytes.");
-		System.out.println("The encoded string requieres "    + encodedString.getBytes().length + " bytes.");
-		double differencePercent = encodedString.length()/inputString.length();
-		System.out.println("Difference in space requires is " + differencePercent + ".");
+		
+		double bytesForTheEncodedString = Math.round(encodedString.length()/8.0);
+		
+		System.out.println("The encoded string requieres "    + (int) bytesForTheEncodedString + " bytes.");
+		
+		
+		double differencePercent = (1 - (bytesForTheEncodedString/(inputString.length() + 0.0))) * 100;
+		DecimalFormat df =  new DecimalFormat("#.##");
+		
+		
+		System.out.println("Difference in space requires is " + df.format(differencePercent) + "%.");
 		
 	} 
 
