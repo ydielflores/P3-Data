@@ -125,13 +125,13 @@ public class FileProcessing {
 		return result;
 		
 	}
-	private Map<String,String> huffmanCodeAux(BTNode<Integer,String> root, Map<String,String> result, String code){
-		
-		if(root.getLeft() != null) {
-			return huffmanCodeAux(root.getLeftChild(), result, "0" + code );
-		}else if(root.getRightChild() != null) {
-			return huffmanCodeAux(root.getRightChild(), result, "1" + code );
-		}
+//	private Map<String,String> huffmanCodeAux(BTNode<Integer,String> root, Map<String,String> result, String code){
+//		
+//		if(root.getLeft() != null) {
+//			return huffmanCodeAux(root.getLeftChild(), result, "0" + code );
+//		}else if(root.getRightChild() != null) {
+//			return huffmanCodeAux(root.getRightChild(), result, "1" + code );
+//		}
 	}
 	
 	
