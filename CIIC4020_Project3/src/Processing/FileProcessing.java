@@ -21,7 +21,7 @@ import ClassADT.SortedList.SortedArrayList;
  * @see String
  * @see Integer
  * 
- **/
+ */
 public class FileProcessing {
 
 	public File input;
@@ -41,7 +41,7 @@ public class FileProcessing {
 	 * Receives an input File and calls all the other methods in the class to complete the Huffman Tree.
 	 * @param  input Receives a File object as parameter.  
 	 * @throws FileNotFoundException
-	 **/
+	 */
 	public void start(File input) throws FileNotFoundException {
 
 		String inputAsString = loadData(input);
@@ -59,7 +59,7 @@ public class FileProcessing {
 	 * @param input Receives a File object as parameter.
 	 * @return String Returns the first line of the parameter as a string.
 	 * @throws FileNotFoundException Throws an exception if the input is not found.
-	 **/
+	 */
 	@SuppressWarnings("resource")
 	public String loadData(File input) throws FileNotFoundException {
 
@@ -78,7 +78,7 @@ public class FileProcessing {
 	 * @param input String to build a Map from. 
 	 * @return Map The Character from the parameter will be the Keys of this map as Strings. The value of each key will represent
 	 * the frequency of each key in the input parameter.
-	 **/
+	 */
 	public Map<String,Integer> computeFD(String input){
 
 		HashTableSCFactory<String, Integer> htscf = new  HashTableSCFactory<String, Integer>();
@@ -104,7 +104,7 @@ public class FileProcessing {
 	 * Builds the binary tree representing the Huffman Tree.
 	 * @param inputMap Receives a Map containing Strings as keys and Integers as values. The integers must be the frequencies of the keys in a String.  
 	 * @return BTNode Returns the root of the Huffman Tree (Binary Tree).
-	 **/
+	 */
 	public BTNode<Integer, String> huffmanTree(Map<String,Integer> inputMap){
 
 		List<String> keysAsList =  inputMap.getKeys();
@@ -182,7 +182,7 @@ public class FileProcessing {
 	 * @param codeMap Receives a Map containing Strings as values and keys. The keys will be each character of a given String and the keys will be the Huffman Code for each key. 
 	 * @param input The string to be encoded.
 	 * @return Returns the encoded input.
-	 **/
+	 */
 	public String encode(Map<String,String> codeMap, String input) {
 
 		String encodedInput = "";
