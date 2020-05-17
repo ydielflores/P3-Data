@@ -24,7 +24,7 @@ public class HuffManCoding {
 		//fp.start(fp.input2);
 		
 		/*You can use the randomizer(int) to generate a random Alpha Numeric String and build the Huffman Code from it.
-		 *The parameter will represent the length of the String.*/ 
+		 *The parameter represents the length of the String.*/ 
 		//fp.randomizer(20);
 	}
 	

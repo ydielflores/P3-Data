@@ -40,7 +40,7 @@ public class FileProcessing {
 	/**
 	 * Receives an input File and calls all the other methods in the class to complete the Huffman Tree.
 	 * @param  input Receives a File object as parameter.  
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException Will throw an exception if the File that you are trying to read is not found.
 	 */
 	public void start(File input) throws FileNotFoundException {
 
@@ -145,7 +145,7 @@ public class FileProcessing {
 			sortedNodes.add(nodeThatLinks);
 
 		}
-
+		BinaryTreePrinter.print(sortedNodes.get(0));
 		return sortedNodes.get(0);
 
 	}
