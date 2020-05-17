@@ -12,7 +12,7 @@ public class HuffManCoding {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		/*vvv After loading the file called "stringData.txt" into the 'res' folder, this line should execute the the Huffman Code for that File.*/ 
+		/*vvv There's a file in the res folder named stringData.txt. The first line of this File can edited as you wished for testing purposes. vvv*/ 
 		fp.start(fp.stringData);
 		
 		
